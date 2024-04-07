@@ -1,78 +1,197 @@
 struct PosMov {
-    int MovX, MovY; // Posibles movimientos para la piezas
+    int CantidadMov, MovX, MovY; // Posibles movimientos para la piezas
 };
 
 PosMov *ReyT(int PosX, int PosY) {
-    PosMov *MovimientosT = new PosMov[8];
+    PosMov *MovimientosRT = new PosMov[9];
+    int X = PosX, Y = PosY, i = 0;
 
     // Ataque Izquierda Arriba
-    MovimientosT[0].MovX = PosX - 1;
-    MovimientosT[0].MovY = PosY - 1;
-    // Ataque Arriba
-    MovimientosT[1].MovX = PosX;
-    MovimientosT[1].MovY = PosY - 1;
-    // Ataque Derecha Arriba
-    MovimientosT[2].MovX = PosX + 1;
-    MovimientosT[2].MovY = PosY - 1;
-    // Ataque Izquierda
-    MovimientosT[3].MovX = PosX - 1;
-    MovimientosT[3].MovY = PosY;
-    // Ataque Derecha
-    MovimientosT[4].MovX = PosX + 1;
-    MovimientosT[4].MovY = PosY;
-    // Ataque Izquierda Abajo
-    MovimientosT[5].MovX = PosX - 1;
-    MovimientosT[5].MovY = PosY + 1;
-    // Ataque Abajo
-    MovimientosT[6].MovX = PosX;
-    MovimientosT[6].MovY = PosY + 1;
-    // Ataque Derecha Abajo
-    MovimientosT[7].MovX = PosX + 1;
-    MovimientosT[7].MovY = PosY + 1;
+    X = PosX - 1, Y = PosY - 1;
 
-    return MovimientosT;
+    if (X >= 0 and Y >= 0) {
+        MovimientosRT[i].MovX = X;
+        MovimientosRT[i].MovY = Y;
+        i++;
+    }
+
+    // Ataque Arriba
+    X = PosX, Y = PosY - 1;
+
+    if (Y >= 0) {
+        MovimientosRT[i].MovX = X;
+        MovimientosRT[i].MovY = Y;
+        i++;
+    }
+
+    // Ataque Derecha Arriba
+    X = PosX + 1, Y = PosY - 1;
+
+    if (X <= 7 and Y >= 0) {
+        MovimientosRT[i].MovX = X;
+        MovimientosRT[i].MovY = Y;
+        i++;
+    }
+
+    // Ataque Izquierda
+    X = PosX - 1, Y = PosY;
+
+    if (X >= 0) {
+        MovimientosRT[i].MovX = X;
+        MovimientosRT[i].MovY = Y;
+        i++;
+    }
+
+    // Ataque Derecha
+    X = PosX + 1, Y = PosY;
+
+    if (X <= 7) {
+        MovimientosRT[i].MovX = X;
+        MovimientosRT[i].MovY = Y;
+        i++;
+    }
+
+    // Ataque Izquierda Abajo
+    X = PosX - 1, Y = PosY + 1;
+
+    if (X >= 0 and Y <= 7) {
+        MovimientosRT[i].MovX = X;
+        MovimientosRT[i].MovY = Y;
+        i++;
+    }
+
+    // Ataque Abajo
+    X = PosX, Y = PosY + 1;
+
+    if (Y <= 7) {
+        MovimientosRT[i].MovX = X;
+        MovimientosRT[i].MovY = Y;
+        i++;
+    }
+
+    // Ataque Derecha Abajo
+    X = PosX + 1, Y = PosY + 1;
+
+    if (X <= 7 and Y <= 7) {
+        MovimientosRT[i].MovX = X;
+        MovimientosRT[i].MovY = Y;
+        i++;
+    }
+
+    MovimientosRT[i].MovX = PosX;
+    MovimientosRT[i].MovY = PosY;
+    i++;
+
+    MovimientosRT[0].CantidadMov = i;
+
+    return MovimientosRT;
 }
 
 PosMov *ReyS(int PosX, int PosY) {
     PosMov *MovimientosS = new PosMov[8];
+    int X = PosX, Y = PosY, i = 0;
 
     // Ataque Izquierda Arriba
-    MovimientosS[0].MovX = PosX - 1;
-    MovimientosS[0].MovY = PosY - 1;
+    X = PosX - 1, Y = PosY - 1;
+
+    if (X >= 0 and Y >= 0) {
+        MovimientosS[i].MovX = X;
+        MovimientosS[i].MovY = Y;
+        i++;
+    }
+
     // Ataque Arriba
-    MovimientosS[1].MovX = PosX;
-    MovimientosS[1].MovY = PosY - 1;
+    X = PosX, Y = PosY - 1;
+
+    if (Y >= 0) {
+        MovimientosS[i].MovX = X;
+        MovimientosS[i].MovY = Y;
+        i++;
+    }
+
     // Ataque Derecha Arriba
-    MovimientosS[2].MovX = PosX + 1;
-    MovimientosS[2].MovY = PosY - 1;
+    X = PosX + 1, Y = PosY - 1;
+
+    if (X <= 7 and Y >= 0) {
+        MovimientosS[i].MovX = X;
+        MovimientosS[i].MovY = Y;
+        i++;
+    }
+
     // Ataque Izquierda
-    MovimientosS[3].MovX = PosX - 1;
-    MovimientosS[3].MovY = PosY;
+    X = PosX - 1, Y = PosY;
+
+    if (X >= 0) {
+        MovimientosS[i].MovX = X;
+        MovimientosS[i].MovY = Y;
+        i++;
+    }
+
+
     // Ataque Derecha
-    MovimientosS[4].MovX = PosX + 1;
-    MovimientosS[4].MovY = PosY;
+    X = PosX + 1, Y = PosY;
+
+    if (X <= 7) {
+        MovimientosS[i].MovX = X;
+        MovimientosS[i].MovY = Y;
+        i++;
+    }
+
     // Ataque Izquierda Abajo
-    MovimientosS[5].MovX = PosX - 1;
-    MovimientosS[5].MovY = PosY + 1;
+    X = PosX - 1, Y = PosY + 1;
+
+    if (X >= 0 and Y <= 7) {
+        MovimientosS[i].MovX = X;
+        MovimientosS[i].MovY = Y;
+        i++;
+    }
+
     // Ataque Abajo
-    MovimientosS[6].MovX = PosX;
-    MovimientosS[6].MovY = PosY + 1;
+    X = PosX, Y = PosY + 1;
+
+    if (Y <= 7) {
+        MovimientosS[i].MovX = X;
+        MovimientosS[i].MovY = Y;
+        i++;
+    }
+
     // Ataque Derecha Abajo
-    MovimientosS[7].MovX = PosX + 1;
-    MovimientosS[7].MovY = PosY + 1;
+    X = PosX + 1, Y = PosY + 1;
+
+    if (X <= 7 and Y <= 7) {
+        MovimientosS[i].MovX = X;
+        MovimientosS[i].MovY = Y;
+        i++;
+    }
+
+    MovimientosS[0].CantidadMov = i;
 
     return MovimientosS;
 }
 
 PosMov *Peon(int PosX, int PosY) {
     PosMov *MovimientosP = new PosMov[2];
+    int X = PosX, Y = PosY, i = 0;
+    
+    X = PosX - 1, Y = PosY - 1;
 
     // Ataque Izquierda
-    MovimientosP[0].MovX = PosX - 1;
-    MovimientosP[0].MovY = PosY - 1;
+    if (X >= 0 and Y >= 0) {
+        MovimientosP[i].MovX = X;
+        MovimientosP[i].MovY = Y;
+        i++;
+    }
+
+    X = PosX + 1, Y = PosY - 1;
+
     // Ataque Derecha
-    MovimientosP[1].MovX = PosX + 1;
-    MovimientosP[1].MovY = PosY - 1;
+    if (X <= 7 and Y >= 0) {
+        MovimientosP[i].MovX = X;
+        MovimientosP[i].MovY = Y;
+        i++;
+    }
+
+    MovimientosP[0].CantidadMov = i;
 
     return MovimientosP;
 }
@@ -115,6 +234,8 @@ PosMov *Alfil(int PosX, int PosY) {
         i++;
     };
 
+    MovimientosA[0].CantidadMov = i;
+
     return MovimientosA;
 }
 
@@ -156,36 +277,88 @@ PosMov *Torre(int PosX, int PosY) {
         i++;
     };
 
+    MovimientosT[0].CantidadMov = i;
+
     return MovimientosT;
 }
 
 PosMov *Caballo(int PosX, int PosY) {
     PosMov *MovimientosC = new PosMov[8];
+    int X = PosX, Y = PosY, i = 0;
 
-    // Ataque Arriba Izquierda
-    MovimientosC[0].MovX = PosX - 1;
-    MovimientosC[0].MovY = PosY - 2;
-    // Ataque Izquierda Arriba
-    MovimientosC[1].MovX = PosX - 2;
-    MovimientosC[1].MovY = PosY - 1;
-    // Ataque Arriba Derecha
-    MovimientosC[2].MovX = PosX + 1;
-    MovimientosC[2].MovY = PosY - 2;
-    // Ataque Derecha Arriba
-    MovimientosC[3].MovX = PosX + 2;
-    MovimientosC[3].MovY = PosY - 1;
-    // Ataque Izquierda Abajo
-    MovimientosC[4].MovX = PosX - 2;
-    MovimientosC[4].MovY = PosY + 1;
-    // Ataque Abajo Izquierda
-    MovimientosC[5].MovX = PosX - 1;
-    MovimientosC[5].MovY = PosY + 2;
-    // Ataque Derecha Abajo
-    MovimientosC[6].MovX = PosX + 2;
-    MovimientosC[6].MovY = PosY + 1;
-    // Ataque Abajo Derecha
-    MovimientosC[7].MovX = PosX + 1;
-    MovimientosC[7].MovY = PosY + 2;
+    // Ataque 1 Izquierda 2 Arriba
+    X = PosX - 1, Y = PosY - 2;
+
+    if (X >= 0 and Y >= 0) {
+        MovimientosC[i].MovX = X;
+        MovimientosC[i].MovY = Y;
+        i++;
+    }
+
+    // Ataque 2 Izquierda 1 Arriba
+    X = PosX - 2, Y = PosY - 1;
+
+    if (X >= 0 and Y >= 0) {
+        MovimientosC[i].MovX = X;
+        MovimientosC[i].MovY = Y;
+        i++;
+    }
+
+    // Ataque 2 Arriba 1 Derecha
+    X = PosX + 1, Y = PosY - 2;
+
+    if (X <= 7 and Y >= 0) {
+        MovimientosC[i].MovX = X;
+        MovimientosC[i].MovY = Y;
+        i++;
+    }
+
+    // Ataque 1 Arriba 2 Derecha
+    X = PosX + 2, Y = PosY - 1;
+
+    if (X <= 7 and Y >= 0) {
+        MovimientosC[i].MovX = X;
+        MovimientosC[i].MovY = Y;
+        i++;
+    }
+
+    // Ataque 1 Abajo 2 Izquierda
+    X = PosX - 2, Y = PosY + 1;
+
+    if (X >= 0 and Y <= 7) {
+        MovimientosC[i].MovX = X;
+        MovimientosC[i].MovY = Y;
+        i++;
+    }
+
+    // Ataque 2 Abajo 1 Izquierda
+    X = PosX - 1, Y = PosY + 2;
+
+    if (X >= 0 and Y <= 7) {
+        MovimientosC[i].MovX = X;
+        MovimientosC[i].MovY = Y;
+        i++;
+    }
+
+    // Ataque 1 Abajo 2 Derecha
+    X = PosX + 2, Y = PosY + 1;
+
+    if (X <= 7 and Y <= 7) {
+        MovimientosC[i].MovX = X;
+        MovimientosC[i].MovY = Y;
+        i++;
+    }
+
+    // Ataque 2 Abajo 1 Derecha
+    X = PosX + 1, Y = PosY + 2;
+
+    if (X <= 7 and Y <= 7) {
+        MovimientosC[i].MovX = X;
+        MovimientosC[i].MovY = Y;
+        i++;
+    }
+
+    MovimientosC[0].CantidadMov = i;    
 
     return MovimientosC;
 }
@@ -263,6 +436,8 @@ PosMov *Reina(int PosX, int PosY) {
         MovimientosR[i].MovY = ++Y;
         i++;
     };
+
+    MovimientosR[0].CantidadMov = i;
 
     return MovimientosR;
 }

@@ -4,16 +4,17 @@
 #include "Funciones_Piezas.hpp"
 using namespace std;
 
-int CantidadPiezas; // Cantidad de piezas en el Tablero
-
 struct Pieza {
     char simbolo; // Define qué tipo de pieza es y su caracter
     int x, y;     // Su posición dentro del tablero [0, 7] x [0, 7]
 };
 
 struct Tablero {
-    Pieza *piezas_tablero; // Lista de piezas que tiene el tablero
+  int cantidad_piezas;
+  Pieza *piezas_tablero;
 };
+
+Tablero TableroAjedrez;
 
 /*****
  * bool TableroEnJaqueMate
@@ -27,7 +28,92 @@ struct Tablero {
  * bool
  *****/
 bool TableroEnJaqueMate(Tablero &tablero) {
-    return 0;
+    char ArrayTablero[64];
+    int pos;
+    bool Descision = true;
+    PosMov *MovimientosRT, *MovimientosS, *MovimientosP, *MovimientosA, *MovimientosC, *MovimientosR, *MovimientosT;
+
+    for (int i = 0; i < tablero.cantidad_piezas; i++) {
+
+        if (tablero.piezas_tablero[i].simbolo == 'X') {
+
+            MovimientosRT = ReyT(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y);
+            for (int e = 0; e < MovimientosRT[0].CantidadMov; e++) {
+
+                pos = MovimientosRT[e].MovX + MovimientosRT[e].MovY * 8;
+                if (ArrayTablero[pos] != 'x') {
+                    ArrayTablero[pos] = 'A';
+                }
+            }
+        } else if (tablero.piezas_tablero[i].simbolo == 'K') {
+
+            MovimientosS = ReyS(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y);
+            for (int e = 0; e < MovimientosS[0].CantidadMov; e++) {
+
+                pos = MovimientosS[e].MovX + MovimientosS[e].MovY * 8;
+                ArrayTablero[pos] = 'x';
+            }
+        } else if (tablero.piezas_tablero[i].simbolo == 'P') {
+
+            MovimientosP = Peon(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y);
+            for (int e = 0; e < MovimientosP[0].CantidadMov; e++) {
+
+                pos = MovimientosP[e].MovX + MovimientosP[e].MovY * 8;
+                ArrayTablero[pos] = 'x';
+            }
+        } else if (tablero.piezas_tablero[i].simbolo == 'A') {
+
+            MovimientosA = Alfil(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y);
+            for (int e = 0; e < MovimientosA[0].CantidadMov; e++) {
+
+                pos = MovimientosA[e].MovX + MovimientosA[e].MovY * 8;
+                ArrayTablero[pos] = 'x';                
+            }
+        } else if (tablero.piezas_tablero[i].simbolo == 'T') {
+
+            MovimientosT = Torre(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y);
+            for (int e = 0; e < MovimientosT[0].CantidadMov; e++) {
+
+                pos = MovimientosT[e].MovX + MovimientosT[e].MovY * 8;
+                ArrayTablero[pos] = 'x';
+            }
+        } else if (tablero.piezas_tablero[i].simbolo == 'C') {
+
+            MovimientosC = Caballo(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y);
+            for (int e = 0; e < MovimientosC[0].CantidadMov; e++) {
+
+                pos = MovimientosC[e].MovX + MovimientosC[e].MovY * 8;
+                ArrayTablero[pos] = 'x';
+            }
+        } else if (tablero.piezas_tablero[i].simbolo == 'R') {
+
+            MovimientosR = Reina(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y);
+            for (int e = 0; e < MovimientosR[0].CantidadMov; e++) {
+                
+                pos = MovimientosR[e].MovX + MovimientosR[e].MovY * 8;
+                ArrayTablero[pos] = 'x';
+            }
+        }
+    }
+
+    
+
+    for (int i = 0; i < 64; i++) {
+        if (ArrayTablero[i] != 'x' and ArrayTablero[i] != 'A') {
+            ArrayTablero[i] = '.';
+        }
+
+        if (i%8 == 0) {
+            cout << endl;
+        }
+        cout << ArrayTablero[i];
+
+        if (ArrayTablero[i] == 'A') {
+            Descision = false;
+        }
+    }
+
+    return Descision;
 };
 
 /*****
@@ -58,8 +144,8 @@ Pieza *AbrirArchivo(string Archivo) {
         return NULL;
     }
 
-    fp >> CantidadPiezas;
-    Pieza* Piezas = new Pieza[CantidadPiezas];
+    fp >> TableroAjedrez.cantidad_piezas;
+    Pieza* Piezas = new Pieza[TableroAjedrez.cantidad_piezas];
 
     while ((caracter = fp.get()) != EOF) {
         if (caracter == '\n') {
@@ -93,83 +179,18 @@ Pieza *AbrirArchivo(string Archivo) {
  * TipoRetorno, Descripción retorno
  *****/
 int main(int argc, char **argv) {
-    Pieza *Piezas;
-    PosMov *MovimientosT, *MovimientosS, *MovimientosP, *MovimientosA, *MovimientosC, *MovimientosR;
-    Piezas = AbrirArchivo(argv[2]);
-    
-    for (int i = 0; i < CantidadPiezas; i++) {
+    bool Jaque;
 
-        if (Piezas[i].simbolo == 'R') {
+    TableroAjedrez.piezas_tablero = AbrirArchivo(argv[2]);
+    Jaque = TableroEnJaqueMate(TableroAjedrez);
 
-            MovimientosR = Reina(Piezas[i].x, Piezas[i].y);
-        }
+    if (Jaque == false) {
+        cout << "\nNo\n";
+    } else if (Jaque == true) {
+        cout << "\nSí\n";
     }
 
-    for (int i = 0; i < CantidadPiezas; i++) {
-
-        if (Piezas[i].simbolo == 'X') {
-
-            MovimientosT = ReyT(Piezas[i].x, Piezas[i].y);
-            for (int e = 0; e < 8; e++) {
-                cout << "Mov posible: ";
-                cout << "[" << MovimientosT[e].MovX << ",";
-                cout << MovimientosT[e].MovY << "]\n";
-                
-            }
-        } else if (Piezas[i].simbolo == 'K') {
-
-            MovimientosS = ReyS(Piezas[i].x, Piezas[i].y);
-            for (int e = 0; e < 8; e++) {
-                cout << "Mov posible: ";
-                cout << "[" << MovimientosS[e].MovX << ",";
-                cout << MovimientosS[e].MovY << "]\n";
-                
-            }
-        } else if (Piezas[i].simbolo == 'P') {
-
-            MovimientosP = Peon(Piezas[i].x, Piezas[i].y);
-            for (int e = 0; e < 2; e++) {
-                cout << "Mov posible: ";
-                cout << "[" << MovimientosP[e].MovX << ",";
-                cout << MovimientosP[e].MovY << "]\n";
-                
-            }
-        } else if (Piezas[i].simbolo == 'A') {
-            MovimientosA = Alfil(Piezas[i].x, Piezas[i].y);
-            for (int e = 0; e < 13; e++) {
-                cout << "Mov posible: ";
-                cout << "[" << MovimientosA[e].MovX << ",";
-                cout << MovimientosA[e].MovY << "]\n";
-                
-            }
-        } else if (Piezas[i].simbolo == 'T') {
-            MovimientosT = Torre(Piezas[i].x, Piezas[i].y);
-            for (int e = 0; e < 14; e++) {
-                cout << "Mov posible: ";
-                cout << "[" << MovimientosT[e].MovX << ",";
-                cout << MovimientosT[e].MovY << "]\n";
-                
-            }
-        } else if (Piezas[i].simbolo == 'C') {
-            MovimientosC = Caballo(Piezas[i].x, Piezas[i].y);
-            for (int e = 0; e < 8; e++) {
-                cout << "Mov posible: ";
-                cout << "[" << MovimientosC[e].MovX << ",";
-                cout << MovimientosC[e].MovY << "]\n";
-                
-            }
-        } else if (Piezas[i].simbolo == 'R') {
-            MovimientosR = Reina(Piezas[i].x, Piezas[i].y);
-            for (int e = 0; e < 27; e++) {
-                cout << "Mov posible: ";
-                cout << "[" << MovimientosR[e].MovX << ",";
-                cout << MovimientosR[e].MovY << "]\n";
-                
-            }
-        }
-
-
-        cout << Piezas[i].simbolo << ": [";
-        cout << Piezas[i].x << "," << Piezas[i].y << "]\n";
-    }
+    return 0;
 }
+
+/*Tablero 64 casillas array 64 7*Y+X*/
