@@ -1,55 +1,52 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include "Funciones_Piezas.hpp"
 using namespace std;
 
 int CantidadPiezas; // Cantidad de piezas en el Tablero
 
 struct Pieza {
     char simbolo; // Define qué tipo de pieza es y su caracter
-    int x, y; // Su posición dentro del tablero [0, 7] x [0, 7]
+    int x, y;     // Su posición dentro del tablero [0, 7] x [0, 7]
 };
 
 struct Tablero {
-    Pieza* piezas_tablero; // Lista de piezas que tiene el tablero
-};
-
-struct PosMov {
-    int MovX, MovY; // Posibles movimientos para la piezas
+    Pieza *piezas_tablero; // Lista de piezas que tiene el tablero
 };
 
 /*****
-* bool TableroEnJaqueMate
-******
-* Resumen Función
-******
-* Input:
-* Tablero &tablero
-******
-* Returns:
-* bool
-*****/
+ * bool TableroEnJaqueMate
+ ******
+ * Resumen Función
+ ******
+ * Input:
+ * Tablero &tablero
+ ******
+ * Returns:
+ * bool
+ *****/
 bool TableroEnJaqueMate(Tablero &tablero) {
     return 0;
 };
 
 /*****
-* Pieza* AbrirArchivo
-******
-* Resumen Función
-******
-* Input:
-* string Archivo: Descripción Parámetro
-* char caracter:
-* int PosX:
-* int PosY:
-* int i:
-* int CantidadPiezas: 
-******
-* Returns:
-* Pieza*: Descripción retorno
-*****/
-Pieza* AbrirArchivo(string Archivo) {
+ * Pieza* AbrirArchivo
+ ******
+ * Resumen Función
+ ******
+ * Input:
+ * string Archivo: Descripción Parámetro
+ * char caracter:
+ * int PosX:
+ * int PosY:
+ * int i:
+ * int CantidadPiezas:
+ ******
+ * Returns:
+ * Pieza*: Descripción retorno
+ *****/
+Pieza *AbrirArchivo(string Archivo) {
     ifstream fp;
     char caracter;
     int PosX, PosY = -1, i = 0;
@@ -58,11 +55,11 @@ Pieza* AbrirArchivo(string Archivo) {
 
     if (!fp.is_open()) {
         cout << "No se pudo abrir el archivo." << endl;
-		  return NULL;
+        return NULL;
     }
 
     fp >> CantidadPiezas;
-    Pieza* Piezas = new Pieza[CantidadPiezas - 1];
+    Pieza* Piezas = new Pieza[CantidadPiezas];
 
     while ((caracter = fp.get()) != EOF) {
         if (caracter == '\n') {
@@ -72,7 +69,7 @@ Pieza* AbrirArchivo(string Archivo) {
             ++PosX;
         } else {
             Piezas[i].simbolo = caracter;
-            Piezas[i].x = PosX; 
+            Piezas[i].x = PosX;
             Piezas[i].y = PosY;
 
             ++PosX;
@@ -80,130 +77,98 @@ Pieza* AbrirArchivo(string Archivo) {
         }
     }
     fp.close();
-    
     return Piezas;
 }
 
-PosMov* ReyT(int PosX, int PosY) {
-    PosMov* Movimientos = new PosMov[7];
-
-    //Ataque Izquierda Arriba
-    Movimientos[0].MovX = PosX - 1;
-    Movimientos[0].MovY = PosY - 1;
-    //Ataque Arriba
-    Movimientos[1].MovX = PosX;
-    Movimientos[1].MovY = PosY - 1;
-    //Ataque Derecha Arriba
-    Movimientos[2].MovX = PosX + 1;
-    Movimientos[2].MovY = PosY - 1;
-    //Ataque Izquierda
-    Movimientos[3].MovX = PosX - 1;
-    Movimientos[3].MovY = PosY;
-    //Ataque Derecha
-    Movimientos[4].MovX = PosX + 1;
-    Movimientos[4].MovY = PosY;
-    //Ataque Izquierda Abajo
-    Movimientos[5].MovX = PosX - 1;
-    Movimientos[5].MovY = PosY + 1;
-    //Ataque Abajo
-    Movimientos[6].MovX = PosX;
-    Movimientos[6].MovY = PosY + 1;
-    //Ataque Derecha Abajo
-    Movimientos[7].MovX = PosX + 1;
-    Movimientos[7].MovY = PosY + 1;
-
-	 return Movimientos;
-
-}
-
-PosMov* ReyS(int PosX, int PosY) {
-    PosMov* Movimientos = new PosMov[7];
-
-    //Ataque Izquierda Arriba
-    Movimientos[0].MovX = PosX - 1;
-    Movimientos[0].MovY = PosY - 1;
-    //Ataque Arriba
-    Movimientos[1].MovX = PosX;
-    Movimientos[1].MovY = PosY - 1;
-    //Ataque Derecha Arriba
-    Movimientos[2].MovX = PosX + 1;
-    Movimientos[2].MovY = PosY - 1;
-    //Ataque Izquierda
-    Movimientos[3].MovX = PosX - 1;
-    Movimientos[3].MovY = PosY;
-    //Ataque Derecha
-    Movimientos[4].MovX = PosX + 1;
-    Movimientos[4].MovY = PosY;
-    //Ataque Izquierda Abajo
-    Movimientos[5].MovX = PosX - 1;
-    Movimientos[5].MovY = PosY + 1;
-    //Ataque Abajo
-    Movimientos[6].MovX = PosX;
-    Movimientos[6].MovY = PosY + 1;
-    //Ataque Derecha Abajo
-    Movimientos[7].MovX = PosX + 1;
-    Movimientos[7].MovY = PosY + 1;
-
-	 return Movimientos;
-
-}
-
-PosMov* Peon(int PosX, int PosY) {
-    PosMov* Movimientos = new PosMov[1];
-    
-    //Ataque Izquierda
-    Movimientos[0].MovX = PosX - 1;
-    Movimientos[0].MovY = PosY - 1;
-    //Ataque Derecha
-    Movimientos[1].MovX = PosX + 1;
-    Movimientos[1].MovY = PosY - 1;
-
-	 return Movimientos;
-}
-
-PosMov* Alfil(int PosX, int PosY) {
-    PosMov* Movimientos = new PosMov[1];
-
-	 return Movimientos;
-}
-
-PosMov* Torre(int PosX, int PosY) {
-    PosMov* Movimientos = new PosMov[1];
-
-	 return Movimientos;
-}
-
-PosMov* Caballo(int PosX, int PosY) {
-    PosMov* Movimientos = new PosMov[1];
-
-	 return Movimientos;
-}
-
-PosMov* Reina(int PosX, int PosY) {
-    PosMov* Movimientos = new PosMov[1];
-
-	 return Movimientos;
-}
-
 /*****
-* int main
-******
-* Resumen Función
-******
-* Input:
-* tipoParámetro NombreParámetro : Descripción Parámetro
-* .......
-******
-* Returns:
-* TipoRetorno, Descripción retorno
-*****/
+ * int main
+ ******
+ * Resumen Función
+ ******
+ * Input:
+ * tipoParámetro NombreParámetro : Descripción Parámetro
+ * .......
+ ******
+ * Returns:
+ * TipoRetorno, Descripción retorno
+ *****/
 int main(int argc, char **argv) {
-    Pieza* Piezas;
+    Pieza *Piezas;
+    PosMov *MovimientosT, *MovimientosS, *MovimientosP, *MovimientosA, *MovimientosC, *MovimientosR;
     Piezas = AbrirArchivo(argv[2]);
+    
+    for (int i = 0; i < CantidadPiezas; i++) {
 
-	 cout << "La cantidad de piezas es: " << CantidadPiezas << endl;
+        if (Piezas[i].simbolo == 'R') {
+
+            MovimientosR = Reina(Piezas[i].x, Piezas[i].y);
+        }
+    }
 
     for (int i = 0; i < CantidadPiezas; i++) {
+
+        if (Piezas[i].simbolo == 'X') {
+
+            MovimientosT = ReyT(Piezas[i].x, Piezas[i].y);
+            for (int e = 0; e < 8; e++) {
+                cout << "Mov posible: ";
+                cout << "[" << MovimientosT[e].MovX << ",";
+                cout << MovimientosT[e].MovY << "]\n";
+                
+            }
+        } else if (Piezas[i].simbolo == 'K') {
+
+            MovimientosS = ReyS(Piezas[i].x, Piezas[i].y);
+            for (int e = 0; e < 8; e++) {
+                cout << "Mov posible: ";
+                cout << "[" << MovimientosS[e].MovX << ",";
+                cout << MovimientosS[e].MovY << "]\n";
+                
+            }
+        } else if (Piezas[i].simbolo == 'P') {
+
+            MovimientosP = Peon(Piezas[i].x, Piezas[i].y);
+            for (int e = 0; e < 2; e++) {
+                cout << "Mov posible: ";
+                cout << "[" << MovimientosP[e].MovX << ",";
+                cout << MovimientosP[e].MovY << "]\n";
+                
+            }
+        } else if (Piezas[i].simbolo == 'A') {
+            MovimientosA = Alfil(Piezas[i].x, Piezas[i].y);
+            for (int e = 0; e < 13; e++) {
+                cout << "Mov posible: ";
+                cout << "[" << MovimientosA[e].MovX << ",";
+                cout << MovimientosA[e].MovY << "]\n";
+                
+            }
+        } else if (Piezas[i].simbolo == 'T') {
+            MovimientosT = Torre(Piezas[i].x, Piezas[i].y);
+            for (int e = 0; e < 14; e++) {
+                cout << "Mov posible: ";
+                cout << "[" << MovimientosT[e].MovX << ",";
+                cout << MovimientosT[e].MovY << "]\n";
+                
+            }
+        } else if (Piezas[i].simbolo == 'C') {
+            MovimientosC = Caballo(Piezas[i].x, Piezas[i].y);
+            for (int e = 0; e < 8; e++) {
+                cout << "Mov posible: ";
+                cout << "[" << MovimientosC[e].MovX << ",";
+                cout << MovimientosC[e].MovY << "]\n";
+                
+            }
+        } else if (Piezas[i].simbolo == 'R') {
+            MovimientosR = Reina(Piezas[i].x, Piezas[i].y);
+            for (int e = 0; e < 27; e++) {
+                cout << "Mov posible: ";
+                cout << "[" << MovimientosR[e].MovX << ",";
+                cout << MovimientosR[e].MovY << "]\n";
+                
+            }
+        }
+
+
         cout << Piezas[i].simbolo << ": [";
         cout << Piezas[i].x << "," << Piezas[i].y << "]\n";
     }
