@@ -2,6 +2,18 @@ struct PosMov {
     int CantidadMov, MovX, MovY; // Posibles movimientos para la piezas
 };
 
+/*****
+* PosMov ReyT
+******
+* Resumen Función
+******
+* Input:
+* int PosX: Descripción Parámetro
+* int PosY: Descripción Parámetro
+******
+* Returns:
+* PosMov, Descripción retorno
+*****/
 PosMov *ReyT(int PosX, int PosY) {
     PosMov *MovimientosRT = new PosMov[9];
     int X = PosX, Y = PosY, i = 0;
@@ -87,6 +99,18 @@ PosMov *ReyT(int PosX, int PosY) {
     return MovimientosRT;
 }
 
+/*****
+* PosMov ReyS
+******
+* Resumen Función
+******
+* Input:
+* int PosX: Descripción Parámetro
+* int PosY: Descripción Parámetro
+******
+* Returns:
+* PosMov, Descripción retorno
+*****/
 PosMov *ReyS(int PosX, int PosY) {
     PosMov *MovimientosS = new PosMov[8];
     int X = PosX, Y = PosY, i = 0;
@@ -169,6 +193,18 @@ PosMov *ReyS(int PosX, int PosY) {
     return MovimientosS;
 }
 
+/*****
+* PosMov Peon
+******
+* Resumen Función
+******
+* Input:
+* int PosX: Descripción Parámetro
+* int PosY: Descripción Parámetro
+******
+* Returns:
+* PosMov, Descripción retorno
+*****/
 PosMov *Peon(int PosX, int PosY) {
     PosMov *MovimientosP = new PosMov[2];
     int X = PosX, Y = PosY, i = 0;
@@ -196,6 +232,18 @@ PosMov *Peon(int PosX, int PosY) {
     return MovimientosP;
 }
 
+/*****
+* PosMov Alfil
+******
+* Resumen Función
+******
+* Input:
+* int PosX: Descripción Parámetro
+* int PosY: Descripción Parámetro
+******
+* Returns:
+* PosMov, Descripción retorno
+*****/
 PosMov *Alfil(int PosX, int PosY) {
     PosMov *MovimientosA = new PosMov[13];
     int X = PosX, Y = PosY, i = 0;
@@ -239,6 +287,18 @@ PosMov *Alfil(int PosX, int PosY) {
     return MovimientosA;
 }
 
+/*****
+* PosMov Torre
+******
+* Resumen Función
+******
+* Input:
+* int PosX: Descripción Parámetro
+* int PosY: Descripción Parámetro
+******
+* Returns:
+* PosMov, Descripción retorno
+*****/
 PosMov *Torre(int PosX, int PosY) {
     PosMov *MovimientosT = new PosMov[14];
     int X = PosX, Y = PosY, i = 0;
@@ -282,6 +342,18 @@ PosMov *Torre(int PosX, int PosY) {
     return MovimientosT;
 }
 
+/*****
+* PosMov Caballo
+******
+* Resumen Función
+******
+* Input:
+* int PosX: Descripción Parámetro
+* int PosY: Descripción Parámetro
+******
+* Returns:
+* PosMov, Descripción retorno
+*****/
 PosMov *Caballo(int PosX, int PosY) {
     PosMov *MovimientosC = new PosMov[8];
     int X = PosX, Y = PosY, i = 0;
@@ -363,6 +435,18 @@ PosMov *Caballo(int PosX, int PosY) {
     return MovimientosC;
 }
 
+/*****
+* PosMov Reina
+******
+* Resumen Función
+******
+* Input:
+* int PosX: Descripción Parámetro
+* int PosY: Descripción Parámetro
+******
+* Returns:
+* PosMov, Descripción retorno
+*****/
 PosMov *Reina(int PosX, int PosY) {
     PosMov *MovimientosR = new PosMov[27];
     int X = PosX, Y = PosY, i = 0;

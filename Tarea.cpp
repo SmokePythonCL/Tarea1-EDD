@@ -10,11 +10,11 @@ struct Pieza {
 };
 
 struct Tablero {
-  int cantidad_piezas;
-  Pieza *piezas_tablero;
+  int cantidad_piezas; //
+  Pieza *piezas_tablero; //
 };
 
-Tablero TableroAjedrez;
+Tablero TableroAjedrez; //
 
 /*****
  * bool TableroEnJaqueMate
@@ -22,10 +22,10 @@ Tablero TableroAjedrez;
  * Resumen Función
  ******
  * Input:
- * Tablero &tablero
+ * Tablero tablero:
  ******
  * Returns:
- * bool
+ * bool, 
  *****/
 bool TableroEnJaqueMate(Tablero &tablero) {
     char ArrayTablero[64];
@@ -112,20 +112,15 @@ bool TableroEnJaqueMate(Tablero &tablero) {
 };
 
 /*****
- * Pieza* AbrirArchivo
+ * Pieza AbrirArchivo
  ******
  * Resumen Función
  ******
  * Input:
  * string Archivo: Descripción Parámetro
- * char caracter:
- * int PosX:
- * int PosY:
- * int i:
- * int CantidadPiezas:
  ******
  * Returns:
- * Pieza*: Descripción retorno
+ * Pieza, Descripción retorno
  *****/
 Pieza *AbrirArchivo(string Archivo) {
     ifstream fp;
@@ -166,12 +161,10 @@ Pieza *AbrirArchivo(string Archivo) {
  ******
  * Resumen Función
  ******
- * Input:
- * tipoParámetro NombreParámetro : Descripción Parámetro
- * .......
+ * Input: No input
  ******
  * Returns:
- * TipoRetorno, Descripción retorno
+ * int, Retorno por defecto
  *****/
 int main() {
     bool Jaque;
@@ -187,5 +180,3 @@ int main() {
 
     return 0;
 }
-
-/*Tablero 64 casillas array 64 7*Y+X*/
