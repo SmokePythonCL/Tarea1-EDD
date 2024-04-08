@@ -103,11 +103,6 @@ bool TableroEnJaqueMate(Tablero &tablero) {
             ArrayTablero[i] = '.';
         }
 
-        if (i%8 == 0) {
-            cout << endl;
-        }
-        cout << ArrayTablero[i];
-
         if (ArrayTablero[i] == 'A') {
             Descision = false;
         }
@@ -178,10 +173,10 @@ Pieza *AbrirArchivo(string Archivo) {
  * Returns:
  * TipoRetorno, Descripción retorno
  *****/
-int main(int argc, char **argv) {
+int main() {
     bool Jaque;
 
-    TableroAjedrez.piezas_tablero = AbrirArchivo(argv[2]);
+    TableroAjedrez.piezas_tablero = AbrirArchivo("tablero.txt");
     Jaque = TableroEnJaqueMate(TableroAjedrez);
 
     if (Jaque == false) {
