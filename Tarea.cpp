@@ -105,10 +105,12 @@ bool TableroEnJaqueMate(Tablero &tablero) {
     for (int i = 0; i < 64; i++) {
 
         if (ArrayTablero[i] == 'A') {
+            delete[] MovimientosRT, MovimientosS, MovimientosP, MovimientosA, MovimientosC, MovimientosR, MovimientosT;
             return false;
         }
     }
 
+    delete[] MovimientosRT, MovimientosS, MovimientosP, MovimientosA, MovimientosC, MovimientosR, MovimientosT;
     return true;
 };
 
@@ -179,5 +181,6 @@ int main() {
         cout << "\nSí\n";
     }
 
+    delete[] TableroAjedrez.piezas_tablero;
     return 0;
 }
