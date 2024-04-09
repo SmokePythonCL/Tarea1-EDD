@@ -30,25 +30,30 @@ Tablero TableroAjedrez; //
 bool TableroEnJaqueMate(Tablero &tablero) {
     char ArrayTablero[64];
     int pos;
-    bool Descision = true;
+    int e;
     PosMov *MovimientosRT, *MovimientosS, *MovimientosP, *MovimientosA, *MovimientosC, *MovimientosR, *MovimientosT;
+
+    for (int i = 0; i < 64; i++) {
+        ArrayTablero[i] = '.';
+    }
 
     for (int i = 0; i < tablero.cantidad_piezas; i++) {
 
         if (tablero.piezas_tablero[i].simbolo == 'X') {
 
             MovimientosRT = ReyT(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y);
-            for (int e = 0; e < MovimientosRT[0].CantidadMov; e++) {
+            for (e = 0; e < MovimientosRT[0].CantidadMov; e++) {
 
                 pos = MovimientosRT[e].MovX + MovimientosRT[e].MovY * 8;
                 if (ArrayTablero[pos] != 'x') {
                     ArrayTablero[pos] = 'A';
                 }
             }
+
         } else if (tablero.piezas_tablero[i].simbolo == 'K') {
 
             MovimientosS = ReyS(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y);
-            for (int e = 0; e < MovimientosS[0].CantidadMov; e++) {
+            for (e = 0; e < MovimientosS[0].CantidadMov; e++) {
 
                 pos = MovimientosS[e].MovX + MovimientosS[e].MovY * 8;
                 ArrayTablero[pos] = 'x';
@@ -56,7 +61,7 @@ bool TableroEnJaqueMate(Tablero &tablero) {
         } else if (tablero.piezas_tablero[i].simbolo == 'P') {
 
             MovimientosP = Peon(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y);
-            for (int e = 0; e < MovimientosP[0].CantidadMov; e++) {
+            for (e = 0; e < MovimientosP[0].CantidadMov; e++) {
 
                 pos = MovimientosP[e].MovX + MovimientosP[e].MovY * 8;
                 ArrayTablero[pos] = 'x';
@@ -64,7 +69,7 @@ bool TableroEnJaqueMate(Tablero &tablero) {
         } else if (tablero.piezas_tablero[i].simbolo == 'A') {
 
             MovimientosA = Alfil(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y);
-            for (int e = 0; e < MovimientosA[0].CantidadMov; e++) {
+            for (e = 0; e < MovimientosA[0].CantidadMov; e++) {
 
                 pos = MovimientosA[e].MovX + MovimientosA[e].MovY * 8;
                 ArrayTablero[pos] = 'x';                
@@ -72,15 +77,16 @@ bool TableroEnJaqueMate(Tablero &tablero) {
         } else if (tablero.piezas_tablero[i].simbolo == 'T') {
 
             MovimientosT = Torre(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y);
-            for (int e = 0; e < MovimientosT[0].CantidadMov; e++) {
+            for (e = 0; e < MovimientosT[0].CantidadMov; e++) {
 
                 pos = MovimientosT[e].MovX + MovimientosT[e].MovY * 8;
                 ArrayTablero[pos] = 'x';
+                
             }
         } else if (tablero.piezas_tablero[i].simbolo == 'C') {
 
             MovimientosC = Caballo(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y);
-            for (int e = 0; e < MovimientosC[0].CantidadMov; e++) {
+            for (e = 0; e < MovimientosC[0].CantidadMov; e++) {
 
                 pos = MovimientosC[e].MovX + MovimientosC[e].MovY * 8;
                 ArrayTablero[pos] = 'x';
@@ -88,7 +94,7 @@ bool TableroEnJaqueMate(Tablero &tablero) {
         } else if (tablero.piezas_tablero[i].simbolo == 'R') {
 
             MovimientosR = Reina(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y);
-            for (int e = 0; e < MovimientosR[0].CantidadMov; e++) {
+            for (e = 0; e < MovimientosR[0].CantidadMov; e++) {
                 
                 pos = MovimientosR[e].MovX + MovimientosR[e].MovY * 8;
                 ArrayTablero[pos] = 'x';
@@ -96,19 +102,14 @@ bool TableroEnJaqueMate(Tablero &tablero) {
         }
     }
 
-    
-
     for (int i = 0; i < 64; i++) {
-        if (ArrayTablero[i] != 'x' and ArrayTablero[i] != 'A') {
-            ArrayTablero[i] = '.';
-        }
 
         if (ArrayTablero[i] == 'A') {
-            Descision = false;
+            return false;
         }
     }
 
-    return Descision;
+    return true;
 };
 
 /*****
