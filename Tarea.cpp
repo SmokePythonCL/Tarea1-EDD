@@ -52,7 +52,7 @@ bool TableroEnJaqueMate(Tablero &tablero) {
 
         } else if (tablero.piezas_tablero[i].simbolo == 'K') {
 
-            MovimientosS = ReyS(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y);
+            MovimientosS = ReyS(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y, tablero);
             for (e = 0; e < MovimientosS[0].CantidadMov; e++) {
 
                 pos = MovimientosS[e].MovX + MovimientosS[e].MovY * 8;
@@ -60,7 +60,7 @@ bool TableroEnJaqueMate(Tablero &tablero) {
             }
         } else if (tablero.piezas_tablero[i].simbolo == 'P') {
 
-            MovimientosP = Peon(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y);
+            MovimientosP = Peon(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y, tablero);
             for (e = 0; e < MovimientosP[0].CantidadMov; e++) {
 
                 pos = MovimientosP[e].MovX + MovimientosP[e].MovY * 8;
@@ -68,7 +68,7 @@ bool TableroEnJaqueMate(Tablero &tablero) {
             }
         } else if (tablero.piezas_tablero[i].simbolo == 'A') {
 
-            MovimientosA = Alfil(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y);
+            MovimientosA = Alfil(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y, tablero);
             for (e = 0; e < MovimientosA[0].CantidadMov; e++) {
 
                 pos = MovimientosA[e].MovX + MovimientosA[e].MovY * 8;
@@ -76,7 +76,7 @@ bool TableroEnJaqueMate(Tablero &tablero) {
             }
         } else if (tablero.piezas_tablero[i].simbolo == 'T') {
 
-            MovimientosT = Torre(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y);
+            MovimientosT = Torre(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y, tablero);
             for (e = 0; e < MovimientosT[0].CantidadMov; e++) {
 
                 pos = MovimientosT[e].MovX + MovimientosT[e].MovY * 8;
@@ -85,7 +85,7 @@ bool TableroEnJaqueMate(Tablero &tablero) {
             }
         } else if (tablero.piezas_tablero[i].simbolo == 'C') {
 
-            MovimientosC = Caballo(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y);
+            MovimientosC = Caballo(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y, tablero);
             for (e = 0; e < MovimientosC[0].CantidadMov; e++) {
 
                 pos = MovimientosC[e].MovX + MovimientosC[e].MovY * 8;
@@ -93,7 +93,7 @@ bool TableroEnJaqueMate(Tablero &tablero) {
             }
         } else if (tablero.piezas_tablero[i].simbolo == 'R') {
 
-            MovimientosR = Reina(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y);
+            MovimientosR = Reina(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y, tablero);
             for (e = 0; e < MovimientosR[0].CantidadMov; e++) {
                 
                 pos = MovimientosR[e].MovX + MovimientosR[e].MovY * 8;

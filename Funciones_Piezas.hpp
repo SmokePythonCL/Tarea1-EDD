@@ -2,6 +2,11 @@ struct PosMov {
     int CantidadMov, MovX, MovY; // Posibles movimientos para la piezas
 };
 
+struct Tablero {
+  int cantidad_piezas; //
+  Pieza *piezas_tablero; //
+};
+
 /*****
 * PosMov ReyT
 ******
@@ -111,7 +116,7 @@ PosMov *ReyT(int PosX, int PosY) {
 * Returns:
 * PosMov, Descripción retorno
 *****/
-PosMov *ReyS(int PosX, int PosY) {
+PosMov *ReyS(int PosX, int PosY, Tablero &tablero) {
     PosMov *MovimientosS = new PosMov[8];
     int X = PosX, Y = PosY, i = 0;
 
@@ -205,7 +210,7 @@ PosMov *ReyS(int PosX, int PosY) {
 * Returns:
 * PosMov, Descripción retorno
 *****/
-PosMov *Peon(int PosX, int PosY) {
+PosMov *Peon(int PosX, int PosY, Tablero &tablero) {
     PosMov *MovimientosP = new PosMov[2];
     int X = PosX, Y = PosY, i = 0;
     
@@ -244,7 +249,7 @@ PosMov *Peon(int PosX, int PosY) {
 * Returns:
 * PosMov, Descripción retorno
 *****/
-PosMov *Alfil(int PosX, int PosY) {
+PosMov *Alfil(int PosX, int PosY, Tablero &tablero) {
     PosMov *MovimientosA = new PosMov[13];
     int X = PosX, Y = PosY, i = 0;
 
@@ -299,14 +304,24 @@ PosMov *Alfil(int PosX, int PosY) {
 * Returns:
 * PosMov, Descripción retorno
 *****/
-PosMov *Torre(int PosX, int PosY) {
+PosMov *Torre(int PosX, int PosY, Tablero &tablero) {
     PosMov *MovimientosT = new PosMov[14];
     int X = PosX, Y = PosY, i = 0;
 
     //Ataque Superior
     while (Y > 0) {
-        MovimientosT[i].MovX = X;
-        MovimientosT[i].MovY = --Y;
+
+        X = PosX, Y = PosY;
+
+        for (int e = 0; e < tablero.cantidad_piezas; e++){
+            
+            if (tablero.piezas_tablero[e].x != X and tablero.piezas_tablero[e].y != Y){
+                MovimientosT[i].MovX = X;
+                MovimientosT[i].MovY = --Y;
+                break;
+            }
+        }
+
         i++;
     };
 
@@ -354,7 +369,7 @@ PosMov *Torre(int PosX, int PosY) {
 * Returns:
 * PosMov, Descripción retorno
 *****/
-PosMov *Caballo(int PosX, int PosY) {
+PosMov *Caballo(int PosX, int PosY, Tablero &tablero) {
     PosMov *MovimientosC = new PosMov[8];
     int X = PosX, Y = PosY, i = 0;
 
@@ -447,7 +462,7 @@ PosMov *Caballo(int PosX, int PosY) {
 * Returns:
 * PosMov, Descripción retorno
 *****/
-PosMov *Reina(int PosX, int PosY) {
+PosMov *Reina(int PosX, int PosY, Tablero &tablero) {
     PosMov *MovimientosR = new PosMov[27];
     int X = PosX, Y = PosY, i = 0;
 
