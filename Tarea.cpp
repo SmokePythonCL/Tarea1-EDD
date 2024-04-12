@@ -28,9 +28,8 @@ Tablero TableroAjedrez; //
  * bool, 
  *****/
 bool TableroEnJaqueMate(Tablero &tablero) {
-    char ArrayTablero[64];
-    int pos;
-    int e;
+    char* ArrayTablero = new char[64];
+    int pos, e;
     PosMov *MovimientosRT, *MovimientosS, *MovimientosP, *MovimientosA, *MovimientosC, *MovimientosR, *MovimientosT;
 
     for (int i = 0; i < 64; i++) {
@@ -38,81 +37,163 @@ bool TableroEnJaqueMate(Tablero &tablero) {
     }
 
     for (int i = 0; i < tablero.cantidad_piezas; i++) {
+        pos = tablero.piezas_tablero[i].x + tablero.piezas_tablero[i].y * 8;
+        if (tablero.piezas_tablero[i].simbolo != 'X') {
+            ArrayTablero[pos] = '+';
+        }
+    }
 
+    for (int i = 0; i < 64; i++) {
+
+        if (i % 8 == 0) {
+            cout<< "\n";
+        }
+
+        cout << ArrayTablero[i];
+    }
+
+    cout << endl;
+
+    for (int i = 0; i < tablero.cantidad_piezas; i++) {
+
+         if (tablero.piezas_tablero[i].simbolo == 'K') {
+
+            MovimientosS = ReyS(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y, ArrayTablero);
+            for (e = 0; e < MovimientosS[0].CantidadMov; e++) {
+
+                pos = MovimientosS[e].MovX + MovimientosS[e].MovY * 8;
+
+                if (ArrayTablero[pos] == '+' or ArrayTablero[pos] == '#') {
+                    ArrayTablero[pos] = '#';
+                } else {
+                    ArrayTablero[pos] = '*';
+                }
+            }
+
+            delete[] MovimientosS;
+
+        } else if (tablero.piezas_tablero[i].simbolo == 'P') {
+
+            MovimientosP = Peon(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y, ArrayTablero);
+            for (e = 0; e < MovimientosP[0].CantidadMov; e++) {
+
+                pos = MovimientosP[e].MovX + MovimientosP[e].MovY * 8;
+
+                if (ArrayTablero[pos] == '+' or ArrayTablero[pos] == '#') {
+                    ArrayTablero[pos] = '#';
+                } else {
+                    ArrayTablero[pos] = '*';
+                }
+            }
+
+            delete[] MovimientosP;
+        } else if (tablero.piezas_tablero[i].simbolo == 'A') {
+
+            MovimientosA = Alfil(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y, ArrayTablero);
+            for (e = 0; e < MovimientosA[0].CantidadMov; e++) {
+
+                pos = MovimientosA[e].MovX + MovimientosA[e].MovY * 8;
+
+                if (ArrayTablero[pos] == '+' or ArrayTablero[pos] == '#') {
+                    ArrayTablero[pos] = '#';
+                } else {
+                    ArrayTablero[pos] = '*';
+                }              
+            }
+
+            delete[] MovimientosA;
+
+        } else if (tablero.piezas_tablero[i].simbolo == 'T') {
+
+            MovimientosT = Torre(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y, ArrayTablero);
+            for (e = 0; e < MovimientosT[0].CantidadMov; e++) {
+
+                pos = MovimientosT[e].MovX + MovimientosT[e].MovY * 8;
+
+                if (ArrayTablero[pos] == '+' or ArrayTablero[pos] == '#') {
+                    ArrayTablero[pos] = '#';
+                } else {
+                    ArrayTablero[pos] = '*';
+                }                
+
+                cout << pos << " ";
+
+            }
+
+            delete[] MovimientosT;
+
+        } else if (tablero.piezas_tablero[i].simbolo == 'C') {
+
+            MovimientosC = Caballo(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y, ArrayTablero);
+            for (e = 0; e < MovimientosC[0].CantidadMov; e++) {
+
+                pos = MovimientosC[e].MovX + MovimientosC[e].MovY * 8;
+                if (ArrayTablero[pos] == '+' or ArrayTablero[pos] == '#') {
+                    ArrayTablero[pos] = '#';
+                } else {
+                    ArrayTablero[pos] = '*';
+                }
+            }
+
+            delete[] MovimientosC;
+
+        } else if (tablero.piezas_tablero[i].simbolo == 'R') {
+
+            MovimientosR = Reina(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y, ArrayTablero);
+            for (e = 0; e < MovimientosR[0].CantidadMov; e++) {
+                
+                pos = MovimientosR[e].MovX + MovimientosR[e].MovY * 8;
+                
+                cout << ArrayTablero[pos] << " ";
+
+                if (ArrayTablero[pos] == '+' or ArrayTablero[pos] == '#') {
+                    ArrayTablero[pos] = '#';
+                } else {
+                    ArrayTablero[pos] = '*';
+                }
+            }
+
+            delete[] MovimientosR;
+        }
+    }
+
+    for (int i = 0; i < tablero.cantidad_piezas; i++) {
         if (tablero.piezas_tablero[i].simbolo == 'X') {
 
             MovimientosRT = ReyT(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y);
             for (e = 0; e < MovimientosRT[0].CantidadMov; e++) {
 
                 pos = MovimientosRT[e].MovX + MovimientosRT[e].MovY * 8;
-                if (ArrayTablero[pos] != 'x') {
+                if (ArrayTablero[pos] != '*' and ArrayTablero[pos] != '#') {
                     ArrayTablero[pos] = 'A';
                 }
             }
 
-        } else if (tablero.piezas_tablero[i].simbolo == 'K') {
+            delete[] MovimientosRT;
 
-            MovimientosS = ReyS(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y, tablero);
-            for (e = 0; e < MovimientosS[0].CantidadMov; e++) {
-
-                pos = MovimientosS[e].MovX + MovimientosS[e].MovY * 8;
-                ArrayTablero[pos] = 'x';
-            }
-        } else if (tablero.piezas_tablero[i].simbolo == 'P') {
-
-            MovimientosP = Peon(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y, tablero);
-            for (e = 0; e < MovimientosP[0].CantidadMov; e++) {
-
-                pos = MovimientosP[e].MovX + MovimientosP[e].MovY * 8;
-                ArrayTablero[pos] = 'x';
-            }
-        } else if (tablero.piezas_tablero[i].simbolo == 'A') {
-
-            MovimientosA = Alfil(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y, tablero);
-            for (e = 0; e < MovimientosA[0].CantidadMov; e++) {
-
-                pos = MovimientosA[e].MovX + MovimientosA[e].MovY * 8;
-                ArrayTablero[pos] = 'x';                
-            }
-        } else if (tablero.piezas_tablero[i].simbolo == 'T') {
-
-            MovimientosT = Torre(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y, tablero);
-            for (e = 0; e < MovimientosT[0].CantidadMov; e++) {
-
-                pos = MovimientosT[e].MovX + MovimientosT[e].MovY * 8;
-                ArrayTablero[pos] = 'x';
-                
-            }
-        } else if (tablero.piezas_tablero[i].simbolo == 'C') {
-
-            MovimientosC = Caballo(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y, tablero);
-            for (e = 0; e < MovimientosC[0].CantidadMov; e++) {
-
-                pos = MovimientosC[e].MovX + MovimientosC[e].MovY * 8;
-                ArrayTablero[pos] = 'x';
-            }
-        } else if (tablero.piezas_tablero[i].simbolo == 'R') {
-
-            MovimientosR = Reina(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y, tablero);
-            for (e = 0; e < MovimientosR[0].CantidadMov; e++) {
-                
-                pos = MovimientosR[e].MovX + MovimientosR[e].MovY * 8;
-                ArrayTablero[pos] = 'x';
-            }
         }
+
     }
 
     for (int i = 0; i < 64; i++) {
 
+        if (i % 8 == 0) {
+            cout<< "\n";
+        }
+
+        cout << ArrayTablero[i];
+
         if (ArrayTablero[i] == 'A') {
-            delete[] MovimientosRT, MovimientosS, MovimientosP, MovimientosA, MovimientosC, MovimientosR, MovimientosT;
+            delete[] ArrayTablero;
             return false;
         }
     }
 
-    delete[] MovimientosRT, MovimientosS, MovimientosP, MovimientosA, MovimientosC, MovimientosR, MovimientosT;
+
+
+    delete[] ArrayTablero;
     return true;
-};
+}
 
 /*****
  * Pieza AbrirArchivo

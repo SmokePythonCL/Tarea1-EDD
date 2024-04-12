@@ -2,11 +2,6 @@ struct PosMov {
     int CantidadMov, MovX, MovY; // Posibles movimientos para la piezas
 };
 
-struct Tablero {
-  int cantidad_piezas; //
-  Pieza *piezas_tablero; //
-};
-
 /*****
 * PosMov ReyT
 ******
@@ -116,7 +111,7 @@ PosMov *ReyT(int PosX, int PosY) {
 * Returns:
 * PosMov, Descripción retorno
 *****/
-PosMov *ReyS(int PosX, int PosY, Tablero &tablero) {
+PosMov *ReyS(int PosX, int PosY, char ArrayTablero[]) {
     PosMov *MovimientosS = new PosMov[8];
     int X = PosX, Y = PosY, i = 0;
 
@@ -210,7 +205,7 @@ PosMov *ReyS(int PosX, int PosY, Tablero &tablero) {
 * Returns:
 * PosMov, Descripción retorno
 *****/
-PosMov *Peon(int PosX, int PosY, Tablero &tablero) {
+PosMov *Peon(int PosX, int PosY, char ArrayTablero[]) {
     PosMov *MovimientosP = new PosMov[2];
     int X = PosX, Y = PosY, i = 0;
     
@@ -249,41 +244,49 @@ PosMov *Peon(int PosX, int PosY, Tablero &tablero) {
 * Returns:
 * PosMov, Descripción retorno
 *****/
-PosMov *Alfil(int PosX, int PosY, Tablero &tablero) {
+PosMov *Alfil(int PosX, int PosY, char ArrayTablero[]) {
     PosMov *MovimientosA = new PosMov[13];
-    int X = PosX, Y = PosY, i = 0;
+    int X = PosX, Y = PosY, i = 0, PosArr;
+    
 
     //Ataque Diagonal Izquierda Superior
-    while (X > 0 and Y > 0) {
+    while (X > 0 and Y > 0 and ArrayTablero[PosArr] != '+' and ArrayTablero[PosArr] != '#') {
         MovimientosA[i].MovX = --X;
         MovimientosA[i].MovY = --Y;
+        PosArr = X + Y * 8;
         i++;
     };
 
     X = PosX, Y = PosY;
+    PosArr = -1;
 
     //Ataque Diagonal Derecha Superior
-    while (X < 7 and Y > 0) {
+    while (X < 7 and Y > 0 and ArrayTablero[PosArr] != '+' and ArrayTablero[PosArr] != '#') {
         MovimientosA[i].MovX = ++X;
         MovimientosA[i].MovY = --Y;
+        PosArr = X + Y * 8;
         i++;
     };
 
     X = PosX, Y = PosY;
+    PosArr = -1;
 
     //Ataque Diagonal Izquierda Inferior
-    while (X > 0 and Y < 7) {
+    while (X > 0 and Y < 7 and ArrayTablero[PosArr] != '+' and ArrayTablero[PosArr] != '#') {
         MovimientosA[i].MovX = --X;
         MovimientosA[i].MovY = ++Y;
+        PosArr = X + Y * 8;
         i++;
     };
 
     X = PosX, Y = PosY;
+    PosArr = -1;
 
     //Ataque Diagonal Derecha Inferior
-    while (X < 7 and Y < 7) {
+    while (X < 7 and Y < 7 and ArrayTablero[PosArr] != '+' and ArrayTablero[PosArr] != '#') {
         MovimientosA[i].MovX = ++X;
         MovimientosA[i].MovY = ++Y;
+        PosArr = X + Y * 8;
         i++;
     };
 
@@ -304,53 +307,84 @@ PosMov *Alfil(int PosX, int PosY, Tablero &tablero) {
 * Returns:
 * PosMov, Descripción retorno
 *****/
-PosMov *Torre(int PosX, int PosY, Tablero &tablero) {
-    PosMov *MovimientosT = new PosMov[14];
-    int X = PosX, Y = PosY, i = 0;
+PosMov *Torre(int PosX, int PosY, char ArrayTablero[]) {
+    PosMov *MovimientosT = new PosMov[17];
+    int X = PosX, Y = PosY, i = 0, PosArr;
+
+    PosArr = X + (Y - 1)*8;
 
     //Ataque Superior
-    while (Y > 0) {
-
-        X = PosX, Y = PosY;
-
-        for (int e = 0; e < tablero.cantidad_piezas; e++){
-            
-            if (tablero.piezas_tablero[e].x != X and tablero.piezas_tablero[e].y != Y){
-                MovimientosT[i].MovX = X;
-                MovimientosT[i].MovY = --Y;
-                break;
-            }
-        }
-
+    while (Y > 0 and ArrayTablero[PosArr] != '+' and ArrayTablero[PosArr] != '#') {
+        MovimientosT[i].MovX = X;
+        MovimientosT[i].MovY = --Y;
+        PosArr = X + Y * 8;
         i++;
-    };
+    }
+
+    X = PosX, Y = PosY - 1;
+
+    if (Y > -1) {
+        MovimientosT[i].MovX = X;
+        MovimientosT[i].MovY = Y;
+        i++;
+    }
 
     X = PosX, Y = PosY;
-
+    PosArr = X + (Y + 1)*8;
+    
     //Ataque Inferior
-    while (Y < 7) {
+    while (Y < 7 and ArrayTablero[PosArr] != '+' and ArrayTablero[PosArr] != '#') {
         MovimientosT[i].MovX = X;
         MovimientosT[i].MovY = ++Y;
+        PosArr = X + Y * 8;
         i++;
-    };
+    }
 
-    X = PosX, Y = PosY;
+    X = PosX, Y = PosY + 1;
+
+    if (Y < 8) {
+        MovimientosT[i].MovX = X;
+        MovimientosT[i].MovY = Y;
+        i++;
+    }
+
+    X = PosX - 1, Y = PosY;
+    PosArr = (X - 1) + Y*8;
 
     //Ataque Izquierdo
-    while (X > 0) {
+    while (X > 0 and ArrayTablero[PosArr] != '+' and ArrayTablero[PosArr] != '#') {
         MovimientosT[i].MovX = --X;
         MovimientosT[i].MovY = Y;
+        PosArr = X + Y * 8;
         i++;
-    };
+    }
 
-    X = PosX, Y = PosY;
+    X = PosX - 1, Y = PosY;
 
-    //Ataque Derecho
-    while (X < 7) {
-        MovimientosT[i].MovX = ++X;
+    if (X > -1) {
+        MovimientosT[i].MovX = X;
         MovimientosT[i].MovY = Y;
         i++;
-    };
+    }
+
+    X = PosX, Y = PosY;
+    PosArr = (X + 1) + Y*8;
+
+    //Ataque Derecho
+    while (X < 7 and ArrayTablero[PosArr] != '+' and ArrayTablero[PosArr] != '#') {
+        MovimientosT[i].MovX = ++X;
+        MovimientosT[i].MovY = Y;
+        PosArr = X + Y * 8;
+        i++;
+    }
+
+    X = PosX + 1, Y = PosY;
+
+    if (X < 8) {
+        MovimientosT[i].MovX = X;
+        MovimientosT[i].MovY = Y;
+        i++;
+    }
 
     MovimientosT[0].CantidadMov = i;
 
@@ -369,7 +403,7 @@ PosMov *Torre(int PosX, int PosY, Tablero &tablero) {
 * Returns:
 * PosMov, Descripción retorno
 *****/
-PosMov *Caballo(int PosX, int PosY, Tablero &tablero) {
+PosMov *Caballo(int PosX, int PosY, char ArrayTablero[]) {
     PosMov *MovimientosC = new PosMov[8];
     int X = PosX, Y = PosY, i = 0;
 
@@ -462,77 +496,93 @@ PosMov *Caballo(int PosX, int PosY, Tablero &tablero) {
 * Returns:
 * PosMov, Descripción retorno
 *****/
-PosMov *Reina(int PosX, int PosY, Tablero &tablero) {
+PosMov *Reina(int PosX, int PosY, char ArrayTablero[]) {
     PosMov *MovimientosR = new PosMov[27];
-    int X = PosX, Y = PosY, i = 0;
+    int X = PosX, Y = PosY, i = 0, PosArr;
 
     //Ataque Superior
-    while (Y > 0) {
+    while (Y > 0 and ArrayTablero[PosArr] != '+' and ArrayTablero[PosArr] != '#') {
         MovimientosR[i].MovX = X;
         MovimientosR[i].MovY = --Y;
+        PosArr = X + Y * 8;
         i++;
     };
 
-    X = PosX, Y = PosY;
 
+    X = PosX, Y = PosY;
+    PosArr = -1;
+    
     //Ataque Inferior
-    while (Y < 7) {
+    while (Y < 7 and ArrayTablero[PosArr] != '+' and ArrayTablero[PosArr] != '#') {
         MovimientosR[i].MovX = X;
         MovimientosR[i].MovY = ++Y;
+        PosArr = X + Y * 8;
         i++;
     };
 
     X = PosX, Y = PosY;
+    PosArr = -1;
 
     //Ataque Izquierdo
-    while (X > 0) {
+    while (X > 0 and ArrayTablero[PosArr] != '+' and ArrayTablero[PosArr] != '#') {
         MovimientosR[i].MovX = --X;
         MovimientosR[i].MovY = Y;
+        PosArr = X + Y * 8;
         i++;
     };
 
     X = PosX, Y = PosY;
+    PosArr = -1;
 
     //Ataque Derecho
-    while (X < 7) {
+    while (X < 7 and ArrayTablero[PosArr] != '+' and ArrayTablero[PosArr] != '#') {
         MovimientosR[i].MovX = ++X;
         MovimientosR[i].MovY = Y;
+        PosArr = X + Y * 8;
         i++;
     };
 
     X = PosX, Y = PosY;
+    PosArr = -1;
 
     //Ataque Diagonal Izquierda Superior
-    while (X > 0 and Y > 0) {
+    while (X > 0 and Y > 0 and ArrayTablero[PosArr] != '+' and ArrayTablero[PosArr] != '#') {
         MovimientosR[i].MovX = --X;
         MovimientosR[i].MovY = --Y;
+        PosArr = X + Y * 8;
         i++;
     };
 
     X = PosX, Y = PosY;
+    PosArr = -1;
 
     //Ataque Diagonal Derecha Superior
-    while (X < 7 and Y > 0) {
+    while (X < 7 and Y > 0 and ArrayTablero[PosArr] != '+' and ArrayTablero[PosArr] != '#') {
         MovimientosR[i].MovX = ++X;
         MovimientosR[i].MovY = --Y;
+        PosArr = X + Y * 8;
         i++;
     };
 
     X = PosX, Y = PosY;
+    PosArr = -1;
 
     //Ataque Diagonal Izquierda Inferior
-    while (X > 0 and Y < 7) {
+    while (X > 0 and Y < 7 and ArrayTablero[PosArr] != '+' and ArrayTablero[PosArr] != '#') {
         MovimientosR[i].MovX = --X;
         MovimientosR[i].MovY = ++Y;
+        PosArr = X + Y * 8;
         i++;
     };
 
     X = PosX, Y = PosY;
+    PosArr = -1;
 
     //Ataque Diagonal Derecha Inferior
-    while (X < 7 and Y < 7) {
+    while (X < 7 and Y < 7 and ArrayTablero[PosArr] != '+' and ArrayTablero[PosArr] != '#') {
         MovimientosR[i].MovX = ++X;
         MovimientosR[i].MovY = ++Y;
+        PosArr = X + Y * 8;
         i++;
     };
 
