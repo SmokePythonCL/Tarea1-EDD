@@ -10,22 +10,22 @@ struct Pieza {
 };
 
 struct Tablero {
-  int cantidad_piezas; //
-  Pieza *piezas_tablero; //
+  int cantidad_piezas; // Cantidad de piezas del tablero
+  Pieza *piezas_tablero; // Arreglo de todas las piezas
 };
 
-Tablero TableroAjedrez; //
+Tablero TableroAjedrez; //Tablero como variable global
 
 /*****
  * bool TableroEnJaqueMate
  ******
- * Resumen Función
+ * Calcula si el Rey de Ton está en Jaque Mate, si lo está retorna True y si no False
  ******
  * Input:
- * Tablero tablero:
+ * Tablero tablero: Entrega el tablero con todas las piezas y la cantidad total de estas
  ******
  * Returns:
- * bool, 
+ * bool, El retorno dependerá de si el rey de Ton se en cuentra en Jaque Mate o no
  *****/
 bool TableroEnJaqueMate(Tablero &tablero) {
     char* ArrayTablero = new char[64];
@@ -43,22 +43,17 @@ bool TableroEnJaqueMate(Tablero &tablero) {
         }
     }
 
-    for (int i = 0; i < 64; i++) {
-
-        if (i % 8 == 0) {
-            cout<< "\n";
-        }
-
-        cout << ArrayTablero[i];
-    }
-
-    cout << endl;
+    /*
+    - Cuando se encuentra una pieza de Sebastían se le asigna un + en el tablero
+    - Cuando una pieza atacante encuentra un + deja de tomar las posciones de ataque y la convierte en un # indicando que está protegida
+    - Una posición de ataque se determina como *
+    */
 
     for (int i = 0; i < tablero.cantidad_piezas; i++) {
 
-         if (tablero.piezas_tablero[i].simbolo == 'K') {
+        if (tablero.piezas_tablero[i].simbolo == 'K') {
 
-            MovimientosS = ReyS(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y, ArrayTablero);
+            MovimientosS = ReyS(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y);
             for (e = 0; e < MovimientosS[0].CantidadMov; e++) {
 
                 pos = MovimientosS[e].MovX + MovimientosS[e].MovY * 8;
@@ -74,7 +69,7 @@ bool TableroEnJaqueMate(Tablero &tablero) {
 
         } else if (tablero.piezas_tablero[i].simbolo == 'P') {
 
-            MovimientosP = Peon(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y, ArrayTablero);
+            MovimientosP = Peon(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y);
             for (e = 0; e < MovimientosP[0].CantidadMov; e++) {
 
                 pos = MovimientosP[e].MovX + MovimientosP[e].MovY * 8;
@@ -87,6 +82,7 @@ bool TableroEnJaqueMate(Tablero &tablero) {
             }
 
             delete[] MovimientosP;
+
         } else if (tablero.piezas_tablero[i].simbolo == 'A') {
 
             MovimientosA = Alfil(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y, ArrayTablero);
@@ -114,9 +110,7 @@ bool TableroEnJaqueMate(Tablero &tablero) {
                     ArrayTablero[pos] = '#';
                 } else {
                     ArrayTablero[pos] = '*';
-                }                
-
-                cout << pos << " ";
+                }
 
             }
 
@@ -124,7 +118,7 @@ bool TableroEnJaqueMate(Tablero &tablero) {
 
         } else if (tablero.piezas_tablero[i].simbolo == 'C') {
 
-            MovimientosC = Caballo(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y, ArrayTablero);
+            MovimientosC = Caballo(tablero.piezas_tablero[i].x, tablero.piezas_tablero[i].y);
             for (e = 0; e < MovimientosC[0].CantidadMov; e++) {
 
                 pos = MovimientosC[e].MovX + MovimientosC[e].MovY * 8;
@@ -143,8 +137,6 @@ bool TableroEnJaqueMate(Tablero &tablero) {
             for (e = 0; e < MovimientosR[0].CantidadMov; e++) {
                 
                 pos = MovimientosR[e].MovX + MovimientosR[e].MovY * 8;
-                
-                cout << ArrayTablero[pos] << " ";
 
                 if (ArrayTablero[pos] == '+' or ArrayTablero[pos] == '#') {
                     ArrayTablero[pos] = '#';
@@ -156,6 +148,12 @@ bool TableroEnJaqueMate(Tablero &tablero) {
             delete[] MovimientosR;
         }
     }
+
+    /*
+    - El Rey de Ton convierte las posiciones que puede atacar a A, 
+      si en estos lugares se encuentra una pieza protegida o un 
+      lugar atacado por otra pieza esta posición no se asigna
+    */
 
     for (int i = 0; i < tablero.cantidad_piezas; i++) {
         if (tablero.piezas_tablero[i].simbolo == 'X') {
@@ -170,26 +168,19 @@ bool TableroEnJaqueMate(Tablero &tablero) {
             }
 
             delete[] MovimientosRT;
-
         }
-
     }
 
+    /*
+    Si encuentra una A dentro del tablero se retorna el estado de false
+    */
     for (int i = 0; i < 64; i++) {
-
-        if (i % 8 == 0) {
-            cout<< "\n";
-        }
-
-        cout << ArrayTablero[i];
 
         if (ArrayTablero[i] == 'A') {
             delete[] ArrayTablero;
             return false;
         }
     }
-
-
 
     delete[] ArrayTablero;
     return true;
@@ -198,13 +189,13 @@ bool TableroEnJaqueMate(Tablero &tablero) {
 /*****
  * Pieza AbrirArchivo
  ******
- * Resumen Función
+ * Abre el archivo y guarda la información de las Piezas disponibles y la cantidad de estas en TableroAjedrez
  ******
  * Input:
- * string Archivo: Descripción Parámetro
+ * string Archivo: Nombre del archivo a abrir
  ******
  * Returns:
- * Pieza, Descripción retorno
+ * Pieza, retorna un arreglo de tipo Pieza con toda la información de las piezas disponibles
  *****/
 Pieza *AbrirArchivo(string Archivo) {
     ifstream fp;
@@ -243,12 +234,12 @@ Pieza *AbrirArchivo(string Archivo) {
 /*****
  * int main
  ******
- * Resumen Función
+ * Llama a las otras funciones y con la infomación recibida determina si está en Jaque o no, para luego imprimir el resultado
  ******
  * Input: No input
  ******
  * Returns:
- * int, Retorno por defecto
+ * int, retorna 0 en caso de que se haya ejecutado correctamente
  *****/
 int main() {
     bool Jaque;

@@ -5,14 +5,14 @@ struct PosMov {
 /*****
 * PosMov ReyT
 ******
-* Resumen Función
+* Calcula las posiciones de todas las casillas que puede atacar el Rey de Ton
 ******
 * Input:
-* int PosX: Descripción Parámetro
-* int PosY: Descripción Parámetro
+* int PosX: Posición de la pieza en el eje X
+* int PosY: Posición de la pieza en el eje Y
 ******
 * Returns:
-* PosMov, Descripción retorno
+* PosMov, Retorna un arreglo de todas las posiciones que puede atacar
 *****/
 PosMov *ReyT(int PosX, int PosY) {
     PosMov *MovimientosRT = new PosMov[9];
@@ -102,16 +102,16 @@ PosMov *ReyT(int PosX, int PosY) {
 /*****
 * PosMov ReyS
 ******
-* Resumen Función
+* Calcula las posiciones de todas las casillas que puede atacar el Rey de Sebastián
 ******
 * Input:
-* int PosX: Descripción Parámetro
-* int PosY: Descripción Parámetro
+* int PosX: Posición de la pieza en el eje X
+* int PosY: Posición de la pieza en el eje Y
 ******
 * Returns:
-* PosMov, Descripción retorno
+* PosMov, Retorna un arreglo de todas las posiciones que puede atacar
 *****/
-PosMov *ReyS(int PosX, int PosY, char ArrayTablero[]) {
+PosMov *ReyS(int PosX, int PosY) {
     PosMov *MovimientosS = new PosMov[8];
     int X = PosX, Y = PosY, i = 0;
 
@@ -196,16 +196,16 @@ PosMov *ReyS(int PosX, int PosY, char ArrayTablero[]) {
 /*****
 * PosMov Peon
 ******
-* Resumen Función
+* Calcula las posiciones de todas las casillas que puede atacar el Peon
 ******
 * Input:
-* int PosX: Descripción Parámetro
-* int PosY: Descripción Parámetro
+* int PosX: Posición de la pieza en el eje X
+* int PosY: Posición de la pieza en el eje Y
 ******
 * Returns:
-* PosMov, Descripción retorno
+* PosMov, Retorna un arreglo de todas las posiciones que puede atacar
 *****/
-PosMov *Peon(int PosX, int PosY, char ArrayTablero[]) {
+PosMov *Peon(int PosX, int PosY) {
     PosMov *MovimientosP = new PosMov[2];
     int X = PosX, Y = PosY, i = 0;
     
@@ -235,14 +235,15 @@ PosMov *Peon(int PosX, int PosY, char ArrayTablero[]) {
 /*****
 * PosMov Alfil
 ******
-* Resumen Función
+* Calcula las posiciones de todas las casillas que puede atacar el Alfil
 ******
 * Input:
-* int PosX: Descripción Parámetro
-* int PosY: Descripción Parámetro
+* int PosX: Posición de la pieza en el eje X
+* int PosY: Posición de la pieza en el eje Y
+* char ArrayTablero[]: Arreglo con las posiciones actuales de las piezas ya evaluadas
 ******
 * Returns:
-* PosMov, Descripción retorno
+* PosMov, Retorna un arreglo de todas las posiciones que puede atacar
 *****/
 PosMov *Alfil(int PosX, int PosY, char ArrayTablero[]) {
     PosMov *MovimientosA = new PosMov[13];
@@ -298,14 +299,15 @@ PosMov *Alfil(int PosX, int PosY, char ArrayTablero[]) {
 /*****
 * PosMov Torre
 ******
-* Resumen Función
+* Calcula las posiciones de todas las casillas que puede atacar el Torre
 ******
 * Input:
-* int PosX: Descripción Parámetro
-* int PosY: Descripción Parámetro
+* int PosX: Posición de la pieza en el eje X
+* int PosY: Posición de la pieza en el eje Y
+* char ArrayTablero[]: Arreglo con las posiciones actuales de las piezas ya evaluadas
 ******
 * Returns:
-* PosMov, Descripción retorno
+* PosMov, Retorna un arreglo de todas las posiciones que puede atacar
 *****/
 PosMov *Torre(int PosX, int PosY, char ArrayTablero[]) {
     PosMov *MovimientosT = new PosMov[17];
@@ -394,16 +396,16 @@ PosMov *Torre(int PosX, int PosY, char ArrayTablero[]) {
 /*****
 * PosMov Caballo
 ******
-* Resumen Función
+* Calcula las posiciones de todas las casillas que puede atacar el Caballo
 ******
 * Input:
-* int PosX: Descripción Parámetro
-* int PosY: Descripción Parámetro
+* int PosX: Posición de la pieza en el eje X
+* int PosY: Posición de la pieza en el eje Y
 ******
 * Returns:
-* PosMov, Descripción retorno
+* PosMov, Retorna un arreglo de todas las posiciones que puede atacar
 *****/
-PosMov *Caballo(int PosX, int PosY, char ArrayTablero[]) {
+PosMov *Caballo(int PosX, int PosY) {
     PosMov *MovimientosC = new PosMov[8];
     int X = PosX, Y = PosY, i = 0;
 
@@ -487,14 +489,15 @@ PosMov *Caballo(int PosX, int PosY, char ArrayTablero[]) {
 /*****
 * PosMov Reina
 ******
-* Resumen Función
+* Calcula las posiciones de todas las casillas que puede atacar el Reina
 ******
 * Input:
-* int PosX: Descripción Parámetro
-* int PosY: Descripción Parámetro
+* int PosX: Posición de la pieza en el eje X
+* int PosY: Posición de la pieza en el eje Y
+* char ArrayTablero[]: Arreglo con las posiciones actuales de las piezas ya evaluadas
 ******
 * Returns:
-* PosMov, Descripción retorno
+* PosMov, Retorna un arreglo de todas las posiciones que puede atacar
 *****/
 PosMov *Reina(int PosX, int PosY, char ArrayTablero[]) {
     PosMov *MovimientosR = new PosMov[27];
